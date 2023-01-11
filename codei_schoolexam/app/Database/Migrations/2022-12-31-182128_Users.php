@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+use CodeIgniter\Database\RawSql;
+class Users extends Migration
+{
+    public function up()
+    {
+        $this->forge->addField([
+             'id' => [
+             'type'=> 'INT',
+             'constrainit' => 11,
+             'unsignied' => true,
+             'auto_increment' => true,
+
+        ],
+        'name' => [
+            'type' => 'VARCHAR',
+            'constraint' => 150,
+            
+        ],
+        'email' =>[
+            'type' => 'VARCHAR',
+            'constraint' => 150,
+            'unique' => true,
+
+        ],
+        'user_img' =>[
+          'type' => 'VARCHAR',
+            'constraint' => 300,
+        ],
+        'phone' =>[
+          'type' => 'VARCHAR',
+            'constraint' => 20,
+        ],
+        'password' =>[
+            'type' =>'CHAR',
+            'constraint'=> 64,
+        ],
+          'created_at' =>[
+            'type' => 'TIMESTAMP',
+            'default' =>new RawSql("CURRENT_TIMESTAMP"),
+          ]
+
+    ]);
+    $this->forge->addKey('id',true);
+      $this->forge->createTable("users");
+    }
+
+    public function down()
+    {
+      $this->forge->dropTable("users");
+    }
+}

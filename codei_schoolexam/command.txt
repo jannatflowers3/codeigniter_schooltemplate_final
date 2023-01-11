@@ -1,0 +1,7 @@
+id 
+name 
+email
+phone
+gender
+address
+class
