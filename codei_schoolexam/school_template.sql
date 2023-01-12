@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2023 at 08:02 AM
+-- Generation Time: Jan 12, 2023 at 07:49 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -136,7 +136,7 @@ INSERT INTO `students` (`id`, `st_img`, `st_name`, `st_email`, `st_phone`, `st_a
 
 CREATE TABLE `studentsubjects` (
   `id` int(11) UNSIGNED NOT NULL,
-  `st_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   `class` varchar(50) NOT NULL,
   `shift` varchar(30) NOT NULL,
   `section` varchar(30) NOT NULL,
@@ -147,18 +147,21 @@ CREATE TABLE `studentsubjects` (
   `religion` varchar(30) NOT NULL,
   `social_studies` varchar(30) NOT NULL,
   `computer` varchar(30) NOT NULL,
-  `art` varchar(30) NOT NULL
+  `art` varchar(30) NOT NULL,
+  `student_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `studentsubjects`
 --
 
-INSERT INTO `studentsubjects` (`id`, `st_id`, `class`, `shift`, `section`, `bangla`, `english`, `math`, `science`, `religion`, `social_studies`, `computer`, `art`) VALUES
-(1, 1, 'one', 'Morning', 'A', 'Bangla', 'english', 'math', 'science', 'religion', 'social_studies', 'computer', 'art'),
-(2, 3, 'Two', 'Morning', 'A', 'Bangla', 'english', 'math', 'science', 'religion', '', 'computer', ''),
-(3, 2, 'one', 'Day', 'B', 'Bangla', 'english', 'math', 'science', 'religion', 'social_studies', 'computer', ''),
-(4, 2, 'Three', 'Morning', 'A', 'Bangla', 'english', 'math', 'science', 'religion', '', 'computer', 'art');
+INSERT INTO `studentsubjects` (`id`, `course_id`, `class`, `shift`, `section`, `bangla`, `english`, `math`, `science`, `religion`, `social_studies`, `computer`, `art`, `student_id`) VALUES
+(1, 1, 'one', 'Morning', 'A', 'Bangla', 'english', 'math', 'science', 'religion', 'social_studies', 'computer', 'art', 0),
+(2, 3, 'Two', 'Morning', 'A', 'Bangla', 'english', 'math', 'science', 'religion', '', 'computer', '', 0),
+(3, 2, 'one', 'Day', 'B', 'Bangla', 'english', 'math', 'science', 'religion', 'social_studies', 'computer', '', 0),
+(5, 0, '', '', '', '', 'english', 'math', '', '', '', '', '', 0),
+(6, 0, '', '', '', '', 'english', 'math', '', '', '', '', '', 0),
+(7, 0, '', '', '', 'Bangla', 'English', 'math', '', 'Religion', '', 'Computer', '', 0);
 
 -- --------------------------------------------------------
 
@@ -171,18 +174,20 @@ CREATE TABLE `teachers` (
   `teacher_name` varchar(50) NOT NULL,
   `teacher_details` varchar(100) NOT NULL,
   `teacher_salary` int(11) NOT NULL,
-  `subject` varchar(20) NOT NULL
+  `subject` varchar(20) NOT NULL,
+  `teacher_img` varchar(200) DEFAULT NULL,
+  `teacher_email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`id`, `teacher_name`, `teacher_details`, `teacher_salary`, `subject`) VALUES
-(1, 'Jannat', 'MSS,BSS in Economics', 25000, 'Economics'),
-(2, 'Rahima', 'MSS,BSS in History', 22000, 'History'),
-(3, 'Nahar', 'BSS in Accounting', 15000, 'Accounting'),
-(4, 'Aklima', 'BBA in Accounting', 20000, 'Accounting');
+INSERT INTO `teachers` (`id`, `teacher_name`, `teacher_details`, `teacher_salary`, `subject`, `teacher_img`, `teacher_email`) VALUES
+(1, 'Jannat', 'MSS,BSS in Economics', 25000, 'Economics', NULL, ''),
+(2, 'Rahima', 'MSS,BSS in History', 22000, 'History', NULL, ''),
+(3, 'Nahar', 'BSS in Accounting', 15000, 'Accounting', NULL, ''),
+(4, 'Aklima', 'BBA in Accounting', 20000, 'Accounting', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -196,6 +201,7 @@ CREATE TABLE `users` (
   `email` varchar(150) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `password` char(64) NOT NULL,
+  `user_img` varchar(300) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -203,12 +209,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `created_at`) VALUES
-(5, 'akter', 'farzana@gmail.com', '0123435655', '$2y$10$UY77lTs6LEPNKwseGjzIj.fkJapEyOnIil2RCW.zjbL3KgqIPpICy', '2023-01-01 05:02:09'),
-(6, 'jannatul ferdaush', 'admddfdin@gmail.com', '0145335655', '$2y$10$B6GxzD2m0Xn7B9/sva8aeO2PVEdBNsRYsbeba6.eFlws4Ftrwb/5K', '2023-01-01 05:22:45'),
-(7, 'jannatul ferdaush', 'admin@gmail.com', '0164435655', '$2y$10$a70aakZ641V9ah1gVGFoZucaG0cBB3g.Nwq7xnh7M.O56oPuwpvsi', '2023-01-01 05:44:49'),
-(8, 'farzana akter', 'jannatflowers3@gmail.com', '016564356', '$2y$10$RvOgBEQwEGmlhZOh8ye.zuV4DcfeXtRs0lKcZLCpWdNC5XmADDKi2', '2023-01-02 02:59:06'),
-(9, 'Yasir Arafat', 'yasir@gmail.com', '0123435655', '$2y$10$BPKyAXjjqeqvZXN1NTRX3OZ3FCzjZTWcVwMp1i4hPWVoTtM5fVtKG', '2023-01-03 04:19:24');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `user_img`, `created_at`) VALUES
+(5, 'akter', 'farzana@gmail.com', '0123435655', '$2y$10$UY77lTs6LEPNKwseGjzIj.fkJapEyOnIil2RCW.zjbL3KgqIPpICy', '0', '2023-01-01 05:02:09'),
+(6, 'jannatul ferdaush', 'admddfdin@gmail.com', '0145335655', '$2y$10$B6GxzD2m0Xn7B9/sva8aeO2PVEdBNsRYsbeba6.eFlws4Ftrwb/5K', '0', '2023-01-01 05:22:45'),
+(7, 'jannatul ferdaush', 'admin@gmail.com', '0164435655', '$2y$10$a70aakZ641V9ah1gVGFoZucaG0cBB3g.Nwq7xnh7M.O56oPuwpvsi', '0', '2023-01-01 05:44:49'),
+(8, 'farzana akter', 'jannatflowers3@gmail.com', '016564356', '$2y$10$RvOgBEQwEGmlhZOh8ye.zuV4DcfeXtRs0lKcZLCpWdNC5XmADDKi2', '0', '2023-01-02 02:59:06'),
+(9, 'Yasir Arafat', 'yasir@gmail.com', '0123435655', '$2y$10$BPKyAXjjqeqvZXN1NTRX3OZ3FCzjZTWcVwMp1i4hPWVoTtM5fVtKG', '0', '2023-01-03 04:19:24');
 
 --
 -- Indexes for dumped tables
@@ -289,7 +295,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `studentsubjects`
 --
 ALTER TABLE `studentsubjects`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `teachers`
